@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+
+  - name: adding repo file
+    become: true
+    copy: src=node_exporter.repo dest=/etc/yum.repos.d/node_exporter.repo
+
+  - name: Installing node_exporter
+    become: true
+    yum:
+      name: node_exporter
+      state: present
+
+  - name: Starting and Enabling node_exporter
+    become: true
+    service:
+      name: node_exporter
+      state: started
+      enabled: yes
